@@ -1,11 +1,11 @@
-<img src="http://assets.angular.schule/header-intensivworkshop.png">
+<img src="https://assets.angular.schule/header-intensivworkshop.png">
 
 #### **mit Johannes Hoppe**
 
 <hr>
 
 **Herzlich Willkommen – und schön, dass du dabei bist!**  
-In diesem Repository findest du während des Workshops den Quelltext unserer Beispielanwendung.
+In diesem Repository findest du alle Infos zur Vorbereitung und während des Workshops den Quelltext unserer Beispielanwendung.
 
 # ✅ Vorbereitung
 
@@ -14,7 +14,7 @@ Die gesamte Installation wird rund 30 Minuten dauern.
 
 ## 1.) Benötigte Software
 
-1. **Node.js 14** (aktuelle LTS-Version): [https://nodejs.org](https://nodejs.org)
+1. **Node.js 16** (aktuelle LTS-Version): [https://nodejs.org](https://nodejs.org)
    + Mac-Nutzer:innen bitte Homebrew verwenden! ([siehe Anleitung](https://presentations.angular.schule/HOMEBREW_NODE))
 2. **Google Chrome:** [https://www.google.com/chrome/](https://www.google.com/chrome/) mit folgenden Extensions:
    + [Angular DevTools](https://chrome.google.com/webstore/detail/angular-devtools/ienfalfjdbdpebioblfackkekamfmbnh)
@@ -45,13 +45,13 @@ npm install -g @angular/cli
 
 ```
 node -v
-> Erwartet: v14.x
+> Erwartet: v16.x
 
 npm -v
 > Erwartet: 6.x oder höher
 
 ng version
-> Erwartet: 12.x.x oder höher
+> Erwartet: 13.x.x oder höher
 ```
 
 
@@ -118,4 +118,4 @@ Sollte es zu einer Fehlermeldung kommen, dann sende uns den Fehlertext einfach p
 
 <img src="http://assets.angular.schule/logo-angular-schule.png" height="60">
 
-### &copy; https://angular.schule | Stand: 10.09.2021
+### &copy; https://angular.schule | Stand: 25.11.2021
