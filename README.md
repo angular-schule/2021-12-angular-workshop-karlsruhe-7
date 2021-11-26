@@ -14,9 +14,9 @@ Die gesamte Installation wird rund 30 Minuten dauern.
 
 ## 1.) Benötigte Software
 
-1. **Node.js 16** (aktuelle LTS-Version): [https://nodejs.org](https://nodejs.org)
+1. **Node.js 14 oder 16** (aktuelle LTS-Version 16 wird bevorzugt): [https://nodejs.org](https://nodejs.org)
    + Mac-Nutzer:innen bitte Homebrew verwenden! ([siehe Anleitung](https://presentations.angular.schule/HOMEBREW_NODE))
-2. **Google Chrome:** [https://www.google.com/chrome/](https://www.google.com/chrome/) mit folgenden Extensions:
+2. **Google Chrome:** [https://www.google.com/chrome/](https://www.google.com/chrome/) mit folgenden __(optionalen)__ Extensions:
    + [Angular DevTools](https://chrome.google.com/webstore/detail/angular-devtools/ienfalfjdbdpebioblfackkekamfmbnh)
    + [Redux DevTools](https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd)
 3. **Visual Studio Code:** [https://code.visualstudio.com](https://code.visualstudio.com)
@@ -45,7 +45,7 @@ npm install -g @angular/cli
 
 ```
 node -v
-> Erwartet: v16.x
+> Erwartet: v14.x oder höher
 
 npm -v
 > Erwartet: 6.x oder höher
