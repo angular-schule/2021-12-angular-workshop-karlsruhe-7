@@ -4,7 +4,9 @@
   "description": "my first typescript",
   "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "version": "tsc --version",
+    "build": "tsc",
+    "start": "npm run build && node main.js"
   },
   "author": "Johannnes",
   "license": "None",
