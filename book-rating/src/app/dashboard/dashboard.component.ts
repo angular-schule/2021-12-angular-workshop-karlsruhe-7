@@ -22,7 +22,7 @@ export class DashboardComponent {
     isbn: '222',
     title: 'jQuery',
     description: 'Och nöö...',
-    rating: 1
+    rating: 1 
   }];
 
 }

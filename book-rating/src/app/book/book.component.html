@@ -9,5 +9,17 @@
       </h2>
     </div>
     <p>{{ book.description }}</p>
+
+    <!-- TODO!
+    ++ BAD PRACTICE ++
+    1. Logik im Template
+    2. Verstoß gegen Single Responsibility
+    3. Immutability nicht berücksichtigt
+    -->
+
+    <button class="btn btn-secondary mr-2" (click)="book.rating = book.rating - 1">-1</button>
+    <button class="btn btn-primary" (click)="book.rating = book.rating + 1">+1</button>
+
+
   </div>
 </div>
