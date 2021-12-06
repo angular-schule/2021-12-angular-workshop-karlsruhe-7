@@ -18,12 +18,6 @@ export class BookComponent {
   @Output()
   rateUp = new EventEmitter<Book>();
 
-  // constructor() {
-  //   setTimeout(() => {
-  //     if (this.book) this.book.title = 'B LUBB!!';
-  //   }, 1000)
-  // }
-
   get stars(): undefined[] {
     return new Array(this.book?.rating);
   }
