@@ -32,6 +32,10 @@ export class DashboardComponent {
 
   doRateDown(book: Book): void {
     const ratedBook = this.br.rateDown(book);
+    // const ratedBook = {
+    //   ...book,
+    //   rating: Math.max(book.rating - 1, 1)
+    // }
     this.updateAndSortBooks(ratedBook);
   }
 
