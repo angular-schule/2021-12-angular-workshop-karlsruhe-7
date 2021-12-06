@@ -3,7 +3,7 @@
     <label for="isbn">ISBN</label>
     <input formControlName="isbn" type="text" class="form-control" id="isbn">
 
-    <div class="feedback-error" *ngIf="false">
+    <div class="feedback-error" *ngIf="isInvalid('isbn')">
       Bitte geben Sie eine gültige ISBN an!
     </div>
   </div>
@@ -18,7 +18,9 @@
     <textarea formControlName="description" type="text" class="form-control" id="description"></textarea>
   </div>
 
-  <button type="submit"
+  <button
+    [disabled]="bookForm.invalid"
+    type="submit"
     class="btn btn-primary mb-4">
     Erzeuge Buch
   </button>
