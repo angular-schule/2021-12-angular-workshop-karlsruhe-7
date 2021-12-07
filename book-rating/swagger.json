@@ -1,0 +1,601 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "0.0.1",
+        "title": "Angular.Schule Book API",
+        "description": "Simple HTTP backend for serving books"
+    },
+    "basePath": "/",
+    "schemes": [
+        "https"
+    ],
+    "consumes": [
+        "application/json"
+    ],
+    "produces": [
+        "application/json"
+    ],
+    "tags": [
+        {
+            "name": "books",
+            "description": "Books"
+        },
+        {
+            "name": "booksslow",
+            "description": "Books with slow response time"
+        }
+    ],
+    "paths": {
+        "/books": {
+            "delete": {
+                "tags": [
+                    "books"
+                ],
+                "summary": "RESET store to initial state",
+                "responses": {
+                    "200": {
+                        "description": "All data is now on initial state"
+                    },
+                    "500": {
+                        "description": "Unexpected Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/RestError"
+                        }
+                    }
+                }
+            },
+            "get": {
+                "tags": [
+                    "books"
+                ],
+                "summary": "Get all books",
+                "responses": {
+                    "200": {
+                        "description": "List of all books",
+                        "schema": {
+                            "title": "Books",
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Book"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Unexpected Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/RestError"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "books"
+                ],
+                "summary": "Create a new book",
+                "parameters": [
+                    {
+                        "name": "book",
+                        "in": "body",
+                        "description": "A new book to be stored",
+                        "schema": {
+                            "$ref": "#/definitions/Book"
+                        },
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Book was created",
+                        "schema": {
+                            "$ref": "#/definitions/Book"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid data",
+                        "schema": {
+                            "$ref": "#/definitions/RestError"
+                        }
+                    },
+                    "409": {
+                        "description": "Book does already exist",
+                        "schema": {
+                            "$ref": "#/definitions/RestError"
+                        }
+                    },
+                    "500": {
+                        "description": "Unexpected Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/RestError"
+                        }
+                    }
+                }
+            }
+            
+        },
+        "/books/{isbn}": {
+            "get": {
+                "tags": [
+                    "books"
+                ],
+                "summary": "Get a single book by ISBN",
+                "parameters": [
+                    {
+                        "name": "isbn",
+                        "in": "path",
+                        "type": "string",
+                        "description": "ISBN of the book",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Returns the book with the requested ISBN",
+                        "schema": {
+                            "$ref": "#/definitions/Book"
+                        }
+                    },
+                    "404": {
+                        "description": "Book does not exist",
+                        "schema": {
+                            "$ref": "#/definitions/RestError"
+                        }
+                    },
+                    "500": {
+                        "description": "Unexpected Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/RestError"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "books"
+                ],
+                "summary": "Update an existing book",
+                "description": "Requires a full book entry, ISBN in query and body must match",
+                "parameters": [
+                    {
+                        "name": "isbn",
+                        "in": "path",
+                        "description": "ISBN of the book to update",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "book",
+                        "in": "body",
+                        "description": "An existing book to update",
+                        "schema": {
+                            "$ref": "#/definitions/Book"
+                        },
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Book was updated",
+                        "schema": {
+                            "$ref": "#/definitions/Book"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid data",
+                        "schema": {
+                            "$ref": "#/definitions/RestError"
+                        }
+                    },
+                    "404": {
+                        "description": "Book does not exist",
+                        "schema": {
+                            "$ref": "#/definitions/RestError"
+                        }
+                    },
+                    "500": {
+                        "description": "Unexpected Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/RestError"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "books"
+                ],
+                "summary": "Delete a book",
+                "parameters": [
+                    {
+                        "name": "isbn",
+                        "in": "path",
+                        "description": "ISBN of the book to delete",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Book was deleted or does not exist"
+                    },
+                    "500": {
+                        "description": "Unexpected Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/RestError"
+                        }
+                    }
+                }
+            }
+        },
+        "/books/search/{searchTerm}": {
+            "get": {
+                "tags": [
+                    "books"
+                ],
+                "summary": "Get all books matching the given search term (case insensitive). The properties isbn, title, authors, published (interpreted as ISO string), subtitle and description are evaluated for a match.",
+                "parameters": [
+                    {
+                        "name": "searchTerm",
+                        "in": "path",
+                        "type": "string",
+                        "description": "search term (treated case insensitive)",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List of all books matching the give search term",
+                        "schema": {
+                            "title": "Books",
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Book"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Unexpected Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/RestError"
+                        }
+                    }
+                }
+            }
+        },
+        "/books/slow": {
+            "get": {
+                "tags": [
+                    "booksslow"
+                ],
+                "summary": "Get all books, but with a 5s delay",
+                "responses": {
+                    "200": {
+                        "description": "List of all books (slow!)",
+                        "schema": {
+                            "title": "Books",
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Book"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Unexpected Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/RestError"
+                        }
+                    }
+                }
+            }
+        },
+        "/secure/books": {
+            "get": {
+                "tags": [
+                    "books"
+                ],
+                "summary": "Get all books - SECURED via OAuth 2.0",
+                "description": "Please authorize first!\nUser: auth@angular.schule\nPass: auth0123",
+                "responses": {
+                    "200": {
+                        "description": "List of all books",
+                        "schema": {
+                            "title": "Books",
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Book"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Unexpected Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/RestError"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Auth0": []
+                    }
+                ]
+            }
+        },
+        "/books/{isbn}/slow": {
+            "get": {
+                "tags": [
+                    "booksslow"
+                ],
+                "summary": "Get a single book by ISBN, but with a 5s delay",
+                "parameters": [
+                    {
+                        "name": "isbn",
+                        "in": "path",
+                        "type": "string",
+                        "description": "ISBN of the book",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Returns the book with the requested ISBN (slow!)",
+                        "schema": {
+                            "$ref": "#/definitions/Book"
+                        }
+                    },
+                    "404": {
+                        "description": "Book does not exist",
+                        "schema": {
+                            "$ref": "#/definitions/RestError"
+                        }
+                    },
+                    "500": {
+                        "description": "Unexpected Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/RestError"
+                        }
+                    }
+                }
+            }
+        },
+        "/books/{isbn}/check": {
+            "get": {
+                "tags": [
+                    "books"
+                ],
+                "summary": "Return whether ISBN exists or not",
+                "parameters": [
+                    {
+                        "name": "isbn",
+                        "in": "path",
+                        "type": "string",
+                        "description": "ISBN of the book",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Returns whether the ISBN exists in the database or not (boolean)"
+                    },
+                    "500": {
+                        "description": "Unexpected Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/RestError"
+                        }
+                    }
+                }
+            }
+        },
+        "/books/{isbn}/rate": {
+            "post": {
+                "tags": [
+                    "books"
+                ],
+                "summary": "Update rating of a book to a given value",
+                "parameters": [
+                    {
+                        "name": "isbn",
+                        "in": "path",
+                        "type": "string",
+                        "description": "ISBN of the book",
+                        "required": true
+                    },
+                    {
+                        "name": "rating",
+                        "in": "body",
+                        "description": "The new rating value for the given book",
+                        "schema": {
+                            "$ref": "#/definitions/Rating"
+                        },
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Rating has been updated"
+                    },
+                    "400": {
+                        "description": "Invalid data",
+                        "schema": {
+                            "$ref": "#/definitions/RestError"
+                        }
+                    },
+                    "404": {
+                        "description": "Book does not exist",
+                        "schema": {
+                            "$ref": "#/definitions/RestError"
+                        }
+                    },
+                    "500": {
+                        "description": "Unexpected Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/RestError"
+                        }
+                    }
+                }
+            }
+        },
+        "/avatar/{num}": {
+            "get": {
+                "tags": [
+                    "avatar"
+                ],
+                "summary": "Get avatar image for number",
+                "parameters": [
+                    {
+                        "name": "num",
+                        "in": "path",
+                        "type": "number",
+                        "description": "ID number of avatar",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Avatar with the given ID number",
+                        "content": {
+                          "image/jpg": {
+                            "schema": {
+                              "type": "string",
+                              "format": "binary"
+                            }
+                          }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "securityDefinitions": {
+      "Auth0": {
+        "authorizationUrl": "https://angular-schule.eu.auth0.com/authorize",
+        "type": "oauth2",
+        "flow": "implicit",
+        "client_id": "myb1GOMpODqAaBnS51F9YWhzL13pSyfx"
+      }
+    },
+    "definitions": {
+        "Book": {
+            "type": "object",
+            "description": "The main entity of this API",
+            "required": [
+                "isbn",
+                "title"
+            ],
+            "properties": {
+                "isbn": {
+                    "type": "string",
+                    "example": "9783864907791",
+                    "description": "ISBN, which is used as identifier - only numbers are allowed (no hyphens)"
+                },
+                "title": {
+                    "type": "string",
+                    "example": "Angular",
+                    "description": "Title of the book"
+                },
+                "authors": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "description": "List of all authors of the book",
+                    "example": [
+                        "Ferdinand Malcher",
+                        "Johannes Hoppe",
+                        "Danny Koppenhagen"
+                    ]
+                },
+                "subtitle": {
+                    "type": "string",
+                    "example": "Grundlagen, fortgeschrittene Themen und Best Practices",
+                    "description": "Subtitle of the book"
+                },
+                "rating": {
+                    "type": "integer",
+                    "format": "int32",
+                    "example": 4,
+                    "minimum": 1,
+                    "maximum": 5,
+                    "description": "Rating of the book as stars, from one star (bad) to five stars (great)"
+                },
+                "published": {
+                    "type": "string",
+                    "format": "date-time",
+                    "example": "2020-10-12T00:00:00.000Z",
+                    "description": "date-time as defined by RFC3339 (http://www.ietf.org/rfc/rfc3339.txt) - like new Date().toISOString();"
+                },
+                "description": {
+                    "type": "string",
+                    "example": "Lernen Sie Angular mit diesem Praxisbuch! Mit einem anspruchsvollen Beispielprojekt führen wir Sie durch die Welt von Angular.",
+                    "description": "Short description of the book"
+                },
+                "thumbnails": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Thumbnail"
+                    },
+                    "description": "Images of the book, which are used as thumbnails"
+                },
+                "price": {
+                    "type": "number",
+                    "example": 36.90,
+                    "description": "Price of the book",
+                    "minimum": 0
+                },
+                "firstThumbnailUrl": {
+                    "type": "string",
+                    "example": "https://api.angular.schule/images/cover/angular_auflage3.jpg",
+                    "description": "URL of the first thumbnail, just a shorthand",
+                    "readOnly": true
+                }
+            }
+        },
+        "Thumbnail": {
+            "type": "object",
+            "description": "Link to an image, which is used as a thumbnail",
+            "required": [
+                "url",
+                "title"
+            ],
+            "properties": {
+                "url": {
+                    "type": "string",
+                    "example": "https://api.angular.schule/images/cover/angular_auflage3.jpg",
+                    "description": "Image to display"
+                },
+                "title": {
+                    "type": "string",
+                    "example": "Front Cover",
+                    "description": "Caption of the image"
+                }
+            }
+        },
+        "Rating": {
+            "type": "object",
+            "description": "An object with a rating value (1...5)",
+            "required": [
+                "rating"
+            ],
+            "properties": {
+                "rating": {
+                    "type": "integer",
+                    "format": "int32",
+                    "example": 4,
+                    "minimum": 1,
+                    "maximum": 5,
+                    "description": "Rating value for a book from one star (bad) to five stars (great)"
+                }
+            }
+        },
+        "RestError": {
+            "type": "object",
+            "description": "simple object describing the issue",
+            "properties": {
+                "error": {
+                  "type": "string",
+                  "example": "error text",
+                  "description": "an explanation of the error"
+              }
+            }
+        }
+    }
+}
