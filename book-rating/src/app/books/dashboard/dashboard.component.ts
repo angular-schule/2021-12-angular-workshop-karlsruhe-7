@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Book } from '../shared/book';
 import { BookRatingService } from '../shared/book-rating.service';
 import { BookStoreService } from '../shared/book-store.service';
+import { BooksService } from '../shared/http';
 
 @Component({
   selector: 'br-dashboard',
@@ -16,9 +17,9 @@ export class DashboardComponent {
 
   constructor(
     private br: BookRatingService,
-    private bs: BookStoreService) {
+    private bs: BooksService) {
 
-      this.bs.getBooks().subscribe(books => this.books = books);
+      this.bs.booksGet().subscribe(books => this.books = books);
   }
 
   doRateDown(book: Book): void {
