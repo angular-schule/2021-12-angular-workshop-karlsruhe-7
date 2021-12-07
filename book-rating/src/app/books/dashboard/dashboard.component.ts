@@ -50,7 +50,7 @@ export class DashboardComponent {
       .sort((a, b) => b.rating - a.rating);
   }
 
-  doAddBook(testBook: Book): void {
-    throw new Error('Method not implemented.');
+  doAddBook(newBook: Book): void {
+    this.books = [...this.books, newBook];
   }
 }
