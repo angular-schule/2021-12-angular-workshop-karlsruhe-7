@@ -23,6 +23,9 @@
       (click)="doRateUp()"
       [disabled]="book.rating > 4">+1</button>
 
+    <a class="btn btn-primary ml-2"
+      [routerLink]="['/books', book.isbn]">Details</a>
+
     {{ log() }}
 
   </div>
