@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 // import { DashboardComponent } from './dashboard/dashboard.component';
 // import { BookComponent } from './books/book/book.component';
 import { HttpClientModule } from '@angular/common/http';
+import { ApiModule, BASE_PATH, Configuration } from './books/shared/http';
 
 
 @NgModule({
@@ -16,10 +17,17 @@ import { HttpClientModule } from '@angular/common/http';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule, 
-    HttpClientModule
+    AppRoutingModule,
+    HttpClientModule,
+    // OPTION A
+    // ApiModule.forRoot(() => new Configuration({
+    //   basePath: 'https://api.angular.schule'
+    // }))
   ],
-  providers: [],
+  providers: [
+    // OPTION B
+    { provide: BASE_PATH, useValue: 'https://api.angular.schule' }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
