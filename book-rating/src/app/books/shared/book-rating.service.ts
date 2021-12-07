@@ -12,12 +12,12 @@ export class BookRatingService {
   rateUp(book: Book): Book {
     return {
       ...book,
-      rating: book.rating < this.maxRating ? book.rating + 1 : this.maxRating
+      rating: book.rating! < this.maxRating ? book.rating! + 1 : this.maxRating
     }
   }
 
   rateDown(book: Book): Book {
-    const rating = Math.max(book.rating - 1, this.minRating);
+    const rating = Math.max(book.rating! - 1, this.minRating);
     return {
       ...book,
       rating

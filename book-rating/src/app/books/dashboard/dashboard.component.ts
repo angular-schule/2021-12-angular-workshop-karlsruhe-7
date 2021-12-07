@@ -39,7 +39,7 @@ export class DashboardComponent {
   updateAndSortBooks(ratedBook: Book): void {
     this.books = this.books
       .map(b => b.isbn === ratedBook.isbn ? ratedBook : b)
-      .sort((a, b) => b.rating - a.rating);
+      .sort((a, b) => b.rating! - a.rating!);
   }
 
   doAddBook(newBook: Book): void {
