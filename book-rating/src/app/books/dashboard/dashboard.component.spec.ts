@@ -55,4 +55,11 @@ describe('DashboardComponent', () => {
 
     expect(rs.rateDown).toHaveBeenCalledOnceWith(testBook);
   });
+
+  it('should add books to book list', () => {
+    const testBook = {isbn: '004', title: "node.js"} as Book;
+    component.doAddBook(testBook);
+
+    expect(component.books).toContain(testBook);
+  });
 });

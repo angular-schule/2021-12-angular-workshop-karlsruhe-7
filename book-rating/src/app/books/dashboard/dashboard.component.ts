@@ -49,4 +49,8 @@ export class DashboardComponent {
       .map(b => b.isbn === ratedBook.isbn ? ratedBook : b)
       .sort((a, b) => b.rating - a.rating);
   }
+
+  doAddBook(testBook: Book): void {
+    throw new Error('Method not implemented.');
+  }
 }
