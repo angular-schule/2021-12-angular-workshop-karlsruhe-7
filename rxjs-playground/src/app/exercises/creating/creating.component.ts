@@ -28,7 +28,19 @@ export class CreatingComponent {
       complete: () => this.log('COMPLETE!')
     }
 
-    of('😃', '😍', '😎').subscribe(observer)
+    // const observable = of('😃', '😍', '😎');
+
+    const observable = new Observable<string>(obs => {
+
+      obs.next('😃');
+      obs.next('😍');
+      obs.next('🤪');
+      // obs.error('BLUBB');
+      obs.complete();
+    });
+
+
+    observable.subscribe(observer)
 
 
     /******************************/
