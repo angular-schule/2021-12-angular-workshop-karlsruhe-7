@@ -1,6 +1,12 @@
-<p>
-  {{ book$ | async | json }}
-</p>
+<ng-container *ngIf="book$ | async as book">
+  <h1>
+    {{ book.title }}
+  </h1>
+
+  <p>
+    {{ book.description }}
+  </p>
+</ng-container>
 
 <a routerLink="/books/9783864907791">Go to Angular</a><br>
 <a routerLink="/books/9783864907845">Go to GraphQL</a><br>
