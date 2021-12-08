@@ -24,12 +24,12 @@ export class BookComponent {
 
   /* istanbul ignore next */
   doRateDown() {
-    this.rateDown.emit(this.book);
+    this.rateDown.next(this.book!);
   }
 
   /* istanbul ignore next */
   doRateUp() {
-    this.rateUp.emit(this.book);
+    this.rateUp.next(this.book!);
   }
 
   log() {
