@@ -7,6 +7,10 @@ import { AppComponent } from './app.component';
 // import { BookComponent } from './books/book/book.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ApiModule, BASE_PATH, Configuration } from './books/shared/http';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { environment } from '../environments/environment';
 
 
 @NgModule({
@@ -19,6 +23,9 @@ import { ApiModule, BASE_PATH, Configuration } from './books/shared/http';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    StoreModule.forRoot({}, {}),
+    EffectsModule.forRoot([]),
+    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
     // OPTION A
     // ApiModule.forRoot(() => new Configuration({
     //   basePath: 'https://api.angular.schule'
