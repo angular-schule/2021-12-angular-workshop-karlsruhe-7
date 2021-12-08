@@ -11,13 +11,13 @@ import * as BookActions from './book.actions';
 export class BookEffects {
 
   loadBooks$ = createEffect(() => {
-    return this.actions$.pipe( 
+    return this.actions$.pipe(
 
       ofType(BookActions.loadBooks),
       concatMap(() =>
         /** An EMPTY observable only emits completion. Replace with your own observable API request */
         EMPTY.pipe(
-          map(data => BookActions.loadBooksSuccess({ data })),
+          map(data => BookActions.loadBooksSuccess({ books: data })),
           catchError(error => of(BookActions.loadBooksFailure({ error }))))
       )
     );
