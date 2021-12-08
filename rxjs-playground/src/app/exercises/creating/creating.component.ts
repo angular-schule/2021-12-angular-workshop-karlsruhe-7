@@ -22,10 +22,13 @@ export class CreatingComponent {
 
     /******************************/
 
-    of('😃', '😍', '😎').subscribe(
-      e => this.log(e),
-      err => this.log('ERROR: ' + err),
-      () => this.log('COMPLETE!'))
+    const observer = {
+      next: (e: string) => this.log(e),
+      error: (err: any) => this.log('ERROR: ' + err),
+      complete: () => this.log('COMPLETE!')
+    }
+
+    of('😃', '😍', '😎').subscribe(observer)
 
 
     /******************************/
