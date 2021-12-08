@@ -8,6 +8,7 @@ import { Subject, ReplaySubject, timer, Subscription, takeWhile, takeUntil, take
 export class UnsubscribeComponent implements OnDestroy {
 
   logStream$ = new ReplaySubject<string | number>();
+  destroyed = false;
 
   /**
    * Öffne die Browser-Console: Dort siehst Du den Output eines Observables, das jede Sekunde einen Wert generiert.
@@ -26,7 +27,7 @@ export class UnsubscribeComponent implements OnDestroy {
 
       /******************************/
 
-      take(5)
+      takeWhile(() => !this.destroyed)
 
       /******************************/
 
@@ -39,6 +40,7 @@ export class UnsubscribeComponent implements OnDestroy {
 
   ngOnDestroy() {
     this.logStream$.next('DESTROY');
+    this.destroyed = true;
   }
 
   log(msg: string | number) {
